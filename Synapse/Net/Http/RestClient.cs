@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -19,9 +20,14 @@ namespace Synapse.Net.Http
             {
                 var response = await httpClient.GetAsync(uri, cancellationToken ?? CancellationToken.None);
 
-                // will throw an exception if the status code is not a success code
-                // TODO: we need a global error handling strategy for HTTP requests
-                response.EnsureSuccessStatusCode();
+                try
+                {
+                    response.EnsureSuccessStatusCode();
+                }
+                catch (Exception ex)
+                {
+                    throw new RestClientRequestException($"Unexpected status code from GET request to {uri}", ex);
+                }
 
                 var responseContent = await response.Content.ReadAsStringAsync();
 
@@ -40,10 +46,15 @@ namespace Synapse.Net.Http
                     : null;
                 var httpContent = new StringContent(requestContentBody, System.Text.Encoding.UTF8, "application/json");
                 var response = await httpClient.PostAsync(uri, httpContent, cancellationToken ?? CancellationToken.None);
-
-                // will throw an exception if the status code is not a success code
-                // TODO: we need a global error handling strategy for HTTP requests
-                response.EnsureSuccessStatusCode();
+                
+                try
+                {
+                    response.EnsureSuccessStatusCode();
+                }
+                catch (Exception ex)
+                {
+                    throw new RestClientRequestException($"Unexpected status code from POST request to {uri}", ex);
+                }
 
                 var responseContent = await response.Content.ReadAsStringAsync();
 
@@ -51,4 +62,8 @@ namespace Synapse.Net.Http
             }
         }
     }
+
+    // NOTE: in a real application this class would need to carry
+    // data about the request and response
+    // to be of greater use
 }
