@@ -2,6 +2,9 @@
 
 namespace Synapse.Net.Http
 {
+    // NOTE: in a real application this class would need to carry
+    // data about the request and response
+    // to be of greater use
     public class RestClientRequestException : Exception
     {
         public RestClientRequestException()

@@ -8,7 +8,7 @@ namespace Synapse.Net.Http
 {
     // NOTE: in a real application, this would be a much more robust set of classes
     // but this suffices for the assignment
-    public class RestClient
+    public class RestClient : IDisposable
     {
         // NOTE: I use Cancellation tokens for HTTP calls.
         // It's a good practice to do so
@@ -61,9 +61,11 @@ namespace Synapse.Net.Http
                 return JsonConvert.DeserializeObject<T>(responseContent);
             }
         }
-    }
 
-    // NOTE: in a real application this class would need to carry
-    // data about the request and response
-    // to be of greater use
+        public void Dispose()
+        {
+            // TODO: in a real application, this class would likely be
+            // architected differently and this would be needed.
+        }
+    }
 }
