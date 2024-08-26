@@ -4,6 +4,6 @@ namespace Synapse.Domain.Services.Orders
 {
     public interface IOrderProcessingService
     {
-        Task ProcessDeliveredOrderItemsAsync();
+        Task TryProcessDeliveredOrderItemsAsync();
     }
 }

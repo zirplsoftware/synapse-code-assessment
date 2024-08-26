@@ -6,9 +6,11 @@ namespace Synapse.Domain.Services.Orders
 {
     public class OrderProcessingService : IOrderProcessingService
     {
+        // NOTE: this would be injected via Autofac or another DI container
+        // or can be mocked in a unit test
         public IOrderService OrderService { get; set; }
 
-        public async Task ProcessDeliveredOrderItemsAsync()
+        public async Task TryProcessDeliveredOrderItemsAsync()
         {
             MedicalEquipmentOrder[] orders = null;
 
