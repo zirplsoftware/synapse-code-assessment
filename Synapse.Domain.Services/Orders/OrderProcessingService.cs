@@ -107,8 +107,8 @@ namespace Synapse.Domain.Services.Orders
                     catch (Exception ex)
                     {
                         // NOTE: in a real application, I would likely include the order JSON
-                        // in the message for debugging purposes using a JSON serializer
-                        // ex: var orderJson = JsonConvert.SerializeObject(order);
+                        // in the message for debugging purposes. I'd write a simple JSON serialization extension method
+                        // and use it this way: var orderJson = order.ToJson();
                         // But I'll go simple here.
 
                         this.GetLog().Log($"Unexpected exception processing delivered order items for {order.OrderId}", ex);
