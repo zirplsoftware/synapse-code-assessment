@@ -4,7 +4,7 @@ Thank you for this opportunity. This is a unique assignment for assessing a cand
 and I very much enjoyed it. I feel that the result accurately reflects my approach not 
 just to refactoring code and finding bugs, but to improving software quality in general, 
 starting with architectural concerns. I will certainly have this approach in mind if
-I ever need to interview candidates in the future.
+I ever need to interview candidates in the future. I hope to meet you in an interview soon!
 
 ## Overview
 
