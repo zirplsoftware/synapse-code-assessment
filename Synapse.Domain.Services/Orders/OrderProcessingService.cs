@@ -69,9 +69,10 @@ namespace Synapse.Domain.Services.Orders
                                 }
                                 catch (Exception ex)
                                 {
+                                    // BUG: dup logging can be avoided by a simple boolean flag indicating the exception was already logged
                                     this.GetLog().Log($"Send delivery alert failed for Order {order.OrderId}, Item: {item.Description}", ex);
 
-                                    // NOTE: use throw not rethrow
+                                    // NOTE: use throw not throw ex which will reset the stack trace
                                     throw;
                                 }
                             }
@@ -96,10 +97,11 @@ namespace Synapse.Domain.Services.Orders
                                 // and will end up sending duplicate ones next time this runs
                                 // if we don't track that we have sent them somehow, despite the API being down.
                                 // maybe the product owner is okay with a rare duplicate occurring.
-
+                                
+                                // BUG: dup logging can be avoided by a simple boolean flag indicating the exception was already logged
                                 this.GetLog().Log($"Unexpected exception updating order {order.OrderId}");
 
-                                // NOTE: use throw not rethrow
+                                // NOTE: use throw not throw ex which will reset the stack trace
                                 throw;
                             }
                         }

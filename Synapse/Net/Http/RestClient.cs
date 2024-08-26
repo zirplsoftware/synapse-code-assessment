@@ -14,6 +14,9 @@ namespace Synapse.Net.Http
         // It's a good practice to do so
         public async Task<T> GetAndParseResponseAsJsonAsync<T>(string uri, CancellationToken? cancellationToken = null)
         {
+            // BUG: try/catch should be around entire method
+            // BUG: check for non-null responseContent before deserializing. return default(T) if null
+            
             // TODO: see microsoft's documentation on HttpClient instantiation
             // this approach can result in port exhaustion
             using (var httpClient = new HttpClient())
@@ -37,6 +40,9 @@ namespace Synapse.Net.Http
 
         public async Task<T> PostAsJsonAndParseResponseAsync<T>(string uri, T requestData, CancellationToken? cancellationToken = null)
         {
+            // BUG: try/catch should be around entire method
+            // BUG: check for non-null responseContent before deserializing. return default(T) if null
+
             // NOTE: same note as above about HttpClient instantiation
             using (var httpClient = new HttpClient())
             {

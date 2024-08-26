@@ -13,6 +13,11 @@ namespace Synapse.Domain.Services.Orders
         private const string AlertsUrl = "https://alert-api.com/alerts";
         private const string UpdatesUrl = "https://update-api.com/update";
 
+        // NOTE: this class should probably use an instance RestClient property
+        // allowing the RestClient to use an instance HttpClient property
+        // with this class implementing IDisposable to dispose of the RestClient (and thus the HttpClient through RestClient.Dispose()).
+        // Either the calling code would need to wrap this in a using block or we could rely on the IoC container to manage the lifetime of this class.
+
         public async Task<MedicalEquipmentOrder[]> GetMedicalEquipmentOrdersAsync()
         {
             using (var restClient = new RestClient())
@@ -45,9 +50,10 @@ namespace Synapse.Domain.Services.Orders
                 // NOTE: same note about propagating exceptions as above
                 // TECH NOTE: No response required, so just parse to object
                 await restClient.PostAsJsonAndParseResponseAsync<object>(AlertsUrl, content);
-            }
 
-            this.GetLog().Log($"Delivery alert sent for Order {orderId}, Item: {item.Description}");
+                // NOTE: log inside the using block in case Dispose throws an exception
+                this.GetLog().Log($"Delivery alert sent for Order {orderId}, Item: {item.Description}");
+            }
         }
 
         public async Task UpdateMedicalEquipmentOrderAsync(MedicalEquipmentOrder order)
@@ -57,9 +63,10 @@ namespace Synapse.Domain.Services.Orders
                 // NOTE: same note about propagating exceptions as above
                 // TECH NOTE: No response required, so just parse to object
                 await restClient.PostAsJsonAndParseResponseAsync<object>(UpdatesUrl, order);
-            }
 
-            this.GetLog().Log($"Updated Order {order.OrderId}");
+                // NOTE: log inside the using block in case Dispose throws an exception
+                this.GetLog().Log($"Updated Order {order.OrderId}");
+            }
         }
     }
 }

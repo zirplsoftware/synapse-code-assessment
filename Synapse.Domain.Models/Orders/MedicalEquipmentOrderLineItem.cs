@@ -22,7 +22,7 @@ namespace Synapse.Domain.Models.Orders
         public string Status { get; set; }
 
         // NOTE: I went with your OrdinalIgnoreCase, but I reviewed the difference recently
-        // between Ordinal and OrdinalIgnoreCase and I think InvariantIgnoreCase is typically
+        // between OrdinalIgnoreCase and InvariantIgnoreCase and I think InvariantIgnoreCase is typically
         // more appropriate. I am keeping the original code.
         public bool IsDelivered => DeliveredStatus.Equals(Status, StringComparison.OrdinalIgnoreCase);
     }
