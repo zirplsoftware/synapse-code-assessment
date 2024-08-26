@@ -1,4 +1,7 @@
 using Synapse.Domain.Services.Orders;
+using Synapse.Logging;
+
+LogManager.GetLog("Program").Log("Process Order Updates Background Job - Begin");
 
 var orderProcessingService = new OrderProcessingService
 {
@@ -9,7 +12,7 @@ var orderProcessingService = new OrderProcessingService
 // at the highest level possible, which is usually before
 // they are eaten. Often, but not always, the entry point.
 // In this case, logging is appearing throughout the code
-// since that approach requires more thoughtful design and more time
+// since my preferred approach requires more thoughtful design and more time
 // than an evaluation allows.
 //
 // This method logs and eats all exceptions.
@@ -17,3 +20,5 @@ var orderProcessingService = new OrderProcessingService
 // Though it returns no bool indicating success
 // simply because there are no requirements for it.
 await orderProcessingService.TryProcessDeliveredOrderItemsAsync();
+
+LogManager.GetLog("Program").Log("Process Order Updates Background Job - Complete");
