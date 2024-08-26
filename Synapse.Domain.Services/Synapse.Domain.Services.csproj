@@ -4,4 +4,9 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Synapse.Domain.Models\Synapse.Domain.Models.csproj" />
+    <ProjectReference Include="..\Synapse\Synapse.csproj" />
+  </ItemGroup>
+
 </Project>
