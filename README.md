@@ -1,5 +1,11 @@
 # Synapse Code Assessment
 
+Thank you for this opportunity. This is a unique assignment for assessing a candidate's skills,
+and I very much enjoyed it. I feel that the result accurately reflects my approach not 
+just to refactoring code and finding bugs, but to improving software quality in general, 
+starting with architectural concerns. I will certainly have this approach in mind if
+I ever need to interview candidates in the future.
+
 ## Overview
 
 This solution is divided logically by numbered folders (for automatic sorting in Visual Studio) based
