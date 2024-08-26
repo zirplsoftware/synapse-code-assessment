@@ -7,7 +7,7 @@ namespace Synapse.Domain.Services.Orders
     public interface IOrderService
     {
         Task<MedicalEquipmentOrder[]> GetMedicalEquipmentOrdersAsync();
-        Task SendOrderItemDeliveryAlertAsync(MedicalEquipmentOrderLineItem item);
+        Task SendOrderItemDeliveryAlertAsync(int orderId, MedicalEquipmentOrderLineItem item);
         Task UpdateMedicalEquipmentOrderAsync(MedicalEquipmentOrder order);
     }
 
@@ -35,14 +35,15 @@ namespace Synapse.Domain.Services.Orders
             }
         }
 
-        public async Task SendOrderItemDeliveryAlertAsync(MedicalEquipmentOrderLineItem item)
+        public async Task SendOrderItemDeliveryAlertAsync(int orderId, MedicalEquipmentOrderLineItem item)
         {
             using (var restClient = new RestClient())
             {
                 var content = new
                 {
                     Message =
-                        $"Alert for delivered item: Order {item.OrderId}, Item: {item.Description}, Delivery Notifications: {item.DeliveryNotification}"
+                        $"Alert for delivered item: Order {orderId}, Item: {item.Description}, Delivery Notifications: {item.DeliveryNotification ?? 1}"
+                        // NOTE: default this as the first notification in the message
                 };
 
                 // NOTE: same note about propagating exceptions as above
