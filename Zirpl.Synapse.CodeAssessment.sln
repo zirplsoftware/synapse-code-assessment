@@ -7,14 +7,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Synapse.Applications.Proces
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Synapse.Domain.Services.UnitTests", "Synapse.Domain.Services.UnitTests\Synapse.Domain.Services.UnitTests.csproj", "{BE49274F-8863-46B4-A7E8-B4AF8AFCD86E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Synapse.Domain.Models", "Synapse.Domain.Models\Synapse.Domain.Models.csproj", "{AFF440B7-C2FD-435A-B708-D09C57E20A4F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Synapse.Domain.Models", "Synapse.Domain.Models\Synapse.Domain.Models.csproj", "{AFF440B7-C2FD-435A-B708-D09C57E20A4F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Synapse.Domain.Services", "Synapse.Domain.Services\Synapse.Domain.Services.csproj", "{6DE1663A-CF88-4D22-9508-99229EFAA707}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Synapse.Domain.Services", "Synapse.Domain.Services\Synapse.Domain.Services.csproj", "{6DE1663A-CF88-4D22-9508-99229EFAA707}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 Solution Items", "1 Solution Items", "{2F79AC14-1FD5-48E2-8ECB-D7D0265F07C1}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
 		README.md = README.md
+		Senior Software Engineer Tech Assessment - Synapse Health.docx = Senior Software Engineer Tech Assessment - Synapse Health.docx
+		SynapseCode.cs = SynapseCode.cs
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 Domain", "3 Domain", "{1492A9C8-272C-43E0-B6A0-5A4497611E20}"
@@ -27,7 +29,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 Domain", "3 Domain", "{00
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 Frameworks", "2 Frameworks", "{5FE0291C-3C39-460E-BF5F-7F6A9B3AB8E6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Synapse", "Synapse\Synapse.csproj", "{681DF420-1712-46F0-816B-EE78B690B5B5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Synapse", "Synapse\Synapse.csproj", "{681DF420-1712-46F0-816B-EE78B690B5B5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
