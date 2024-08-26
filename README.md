@@ -13,3 +13,7 @@ I recognize that this solution could be considered vastly over-engineered for th
 as if I was starting this is as a new long-term project that will grow and be maintained by multiple developers. I
 also wrote it to support both .Net Framework and .Net, simply because it made my life easier with my previous client
 to have a single codebase that could be used in both environments.
+
+I noticed some C# XML code documentation in the original code, but not much.
+So I chose not to add this, and focused on naming for clarity
+since this is a simple cases and uses typed data classes.
