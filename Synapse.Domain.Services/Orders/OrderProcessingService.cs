@@ -4,10 +4,6 @@ using Synapse.Domain.Models.Orders;
 
 namespace Synapse.Domain.Services.Orders
 {
-    public interface IOrderProcessingService
-    {
-        Task ProcessDeliveredOrderItemsAsync();
-    }
     public class OrderProcessingService : IOrderProcessingService
     {
         public IOrderService OrderService { get; set; }
