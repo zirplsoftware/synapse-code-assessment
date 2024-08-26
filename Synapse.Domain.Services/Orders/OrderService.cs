@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Synapse.Domain.Models.Orders;
+using Synapse.Logging;
 using Synapse.Net.Http;
 
 namespace Synapse.Domain.Services.Orders
@@ -37,7 +38,7 @@ namespace Synapse.Domain.Services.Orders
                 var content = new
                 {
                     Message =
-                        $"Alert for delivered item: Order {orderId}, Item: {item.Description}, Delivery Notifications: {item.DeliveryNotification ?? 1}"
+                        $"Alert for delivered item: Order {orderId}, Item: {item.Description}, Delivery Notifications: {item.DeliveryNotification}"
                     // NOTE: default this as the first notification in the message
                 };
 
@@ -45,6 +46,8 @@ namespace Synapse.Domain.Services.Orders
                 // TECH NOTE: No response required, so just parse to object
                 await restClient.PostAsJsonAndParseResponseAsync<object>(AlertsUrl, content);
             }
+
+            this.GetLog().Log($"Delivery alert sent for Order {orderId}, Item: {item.Description}");
         }
 
         public async Task UpdateMedicalEquipmentOrderAsync(MedicalEquipmentOrder order)
@@ -55,6 +58,8 @@ namespace Synapse.Domain.Services.Orders
                 // TECH NOTE: No response required, so just parse to object
                 await restClient.PostAsJsonAndParseResponseAsync<object>(UpdatesUrl, order);
             }
+
+            this.GetLog().Log($"Updated Order {order.OrderId}");
         }
     }
 }
