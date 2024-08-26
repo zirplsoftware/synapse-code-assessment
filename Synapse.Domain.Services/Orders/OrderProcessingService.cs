@@ -57,18 +57,15 @@ namespace Synapse.Domain.Services.Orders
                             {
                                 try
                                 {
-                                    // this try/catch feels unnecessary, but I wanted
-                                    // to preserve the original code's behavior of logging 
-                                    // a success or a failure to send the alert.
-                                    // better approaches include specific exception types
-                                    // caught by the main try/catch block.
-                                    // this code results in a double log of the exception if it occurs.
+                                    // NOTE: a better approach to this involves specific exception types
+                                    // such as SendOrderItemDeliveryAlertException thrown by the
+                                    // OrderService.SendOrderItemDeliveryAlertAsync method and
+                                    // caught by the main try/catch block instead of adding this small try/catch block.
+                                    // Also, this less ideal approach results in a double log of the exception if it occurs.
 
+                                    item.DeliveryNotification = 1; // update it first so the message will be accurate
                                     await OrderService.SendOrderItemDeliveryAlertAsync(order.OrderId, item);
-                                    item.DeliveryNotification = 1;
                                     requiresUpdate = true;
-
-                                    this.GetLog().Log($"Delivery alert sent for Order {order.OrderId}, Item: {item.Description}");
                                 }
                                 catch (Exception ex)
                                 {
@@ -82,11 +79,29 @@ namespace Synapse.Domain.Services.Orders
 
                         if (requiresUpdate)
                         {
-                            // TODO: an exception here requires thought on how to handle
-                            // as we have already sent the notifications
-                            // and will end up sending duplicate ones next time this runs
-                            // if we don't track that we have sent them somehow, despite the API being down.
-                            await OrderService.UpdateMedicalEquipmentOrderAsync(order);
+                            try
+                            {
+                                // NOTE: a better approach to this involves specific exception types
+                                // such as UpdateMedicalEquipmentOrderException thrown by the
+                                // OrderService.UpdateMedicalEquipmentOrderAsync method and
+                                // caught by the main try/catch block instead of adding this small try/catch block.
+                                // Also, this less ideal approach results in a double log of the exception if it occurs.
+
+                                await OrderService.UpdateMedicalEquipmentOrderAsync(order);
+                            }
+                            catch (Exception ex)
+                            {
+                                // TODO: an exception here requires thought on how to handle
+                                // as we have already sent the notifications
+                                // and will end up sending duplicate ones next time this runs
+                                // if we don't track that we have sent them somehow, despite the API being down.
+                                // maybe the product owner is okay with a rare duplicate occurring.
+
+                                this.GetLog().Log($"Unexpected exception updating order {order.OrderId}");
+
+                                // NOTE: use throw not rethrow
+                                throw;
+                            }
                         }
                     }
                     catch (Exception ex)
@@ -96,7 +111,7 @@ namespace Synapse.Domain.Services.Orders
                         // ex: var orderJson = JsonConvert.SerializeObject(order);
                         // But I'll go simple here.
 
-                        this.GetLog().Log($"Unexpected exception sending delivery updates for {order.OrderId}", ex);
+                        this.GetLog().Log($"Unexpected exception processing delivered order items for {order.OrderId}", ex);
                         // NOTE: Log, but move on to the next order so that the whole background job is not stopped
                     }
                 }
