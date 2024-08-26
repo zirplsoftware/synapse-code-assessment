@@ -17,10 +17,12 @@ namespace Synapse.Domain.Services.Orders
             using (var restClient = new RestClient())
             {
                 // NOTE: the original code provided
-                // logged exceptions but did not propagate them.
-                // this is a bad idea.
-                // though sometimes it is desired, and in that case,
-                // a better method would be is async Task<bool> TryGetMedicalEquipmentOrdersOrdersAsync(out MedicalEquipmentOrder[] orders)
+                // logging of exceptions but did not propagate them.
+                // instead it just returned an empty array.
+                // I didn't feel this was the best approach here.
+                // Sometimes it is desired, and in that case,
+                // a better method would be:
+                // async Task<bool> TryGetMedicalEquipmentOrdersOrdersAsync(out MedicalEquipmentOrder[] orders)
                 // but for my purposes, I am choosing to propagate the exception
                 // and let the caller handle it.
                 var orders = await restClient.GetAndParseResponseAsJsonAsync<MedicalEquipmentOrder[]>(OrdersUrl);
