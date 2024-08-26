@@ -37,8 +37,7 @@ namespace Synapse.Net.Http
 
         public async Task<T> PostAsJsonAndParseResponseAsync<T>(string uri, T requestData, CancellationToken? cancellationToken = null)
         {
-            // TODO: see microsoft's documentation on HttpClient instantiation
-            // this approach can result in port exhaustion
+            // NOTE: same note as above about HttpClient instantiation
             using (var httpClient = new HttpClient())
             {
                 var requestContentBody = requestData != null
@@ -64,7 +63,7 @@ namespace Synapse.Net.Http
 
         public void Dispose()
         {
-            // TODO: in a real application, this class would likely be
+            // NOTE: in a real application, this class would likely be
             // architected differently and this would be needed.
         }
     }
