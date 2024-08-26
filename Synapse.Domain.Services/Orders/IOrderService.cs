@@ -7,6 +7,8 @@ namespace Synapse.Domain.Services.Orders
     public interface IOrderService
     {
         Task<MedicalEquipmentOrder[]> GetMedicalEquipmentOrdersAsync();
+        Task SendOrderItemDeliveryAlertAsync(MedicalEquipmentOrderLineItem item);
+        Task UpdateMedicalEquipmentOrderAsync(MedicalEquipmentOrder order);
     }
 
     public class OrderService : IOrderService
@@ -14,6 +16,8 @@ namespace Synapse.Domain.Services.Orders
         // NOTE: this would be retrieved from configuration
         // of some sort in a real application rather than hardcoded
         private const string OrdersUrl = "https://orders-api.com/orders";
+        private const string AlertsUrl = "https://alert-api.com/alerts";
+        private const string UpdatesUrl = "https://update-api.com/update";
 
         public async Task<MedicalEquipmentOrder[]> GetMedicalEquipmentOrdersAsync()
         {
@@ -28,6 +32,32 @@ namespace Synapse.Domain.Services.Orders
                 // and let the caller handle it.
                 var orders = await restClient.GetAndParseResponseAsJsonAsync<MedicalEquipmentOrder[]>(OrdersUrl);
                 return orders;
+            }
+        }
+
+        public async Task SendOrderItemDeliveryAlertAsync(MedicalEquipmentOrderLineItem item)
+        {
+            using (var restClient = new RestClient())
+            {
+                var content = new
+                {
+                    Message =
+                        $"Alert for delivered item: Order {item.OrderId}, Item: {item.Description}, Delivery Notifications: {item.DeliveryNotification}"
+                };
+
+                // NOTE: same note about propagating exceptions as above
+                // TECH NOTE: No response required, so just parse to object
+                await restClient.PostAsJsonAndParseResponseAsync<object>(AlertsUrl, content);
+            }
+        }
+
+        public async Task UpdateMedicalEquipmentOrderAsync(MedicalEquipmentOrder order)
+        {
+            using (var restClient = new RestClient())
+            {
+                // NOTE: same note about propagating exceptions as above
+                // TECH NOTE: No response required, so just parse to object
+                await restClient.PostAsJsonAndParseResponseAsync<object>(UpdatesUrl, order);
             }
         }
     }
