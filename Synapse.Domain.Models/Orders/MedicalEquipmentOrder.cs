@@ -6,7 +6,5 @@ namespace Synapse.Domain.Models.Orders
     {
         public int OrderId { get; set; }
         public IList<MedicalEquipmentOrderLineItem> Items { get; set; } = new List<MedicalEquipmentOrderLineItem>();
-
-        // surely many more properties
     }
 }
